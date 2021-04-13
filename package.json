@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "n",
+    "dev": "webpack",
     "server": "webpack-dev-server"
   },
   "repository": {
@@ -29,9 +30,15 @@
     "babel-loader": "^8.2.2",
     "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^5.2.0",
+    "css-minimizer-webpack-plugin": "^1.3.0",
     "file-loader": "^6.2.0",
     "glob": "^7.1.6",
     "html-webpack-plugin": "^5.3.1",
+    "image-minimizer-webpack-plugin": "^2.2.0",
+    "imagemin-gifsicle": "^7.0.0",
+    "imagemin-jpegtran": "^7.0.0",
+    "imagemin-optipng": "^8.0.0",
+    "imagemin-svgo": "^9.0.0",
     "less": "^4.1.1",
     "less-loader": "^8.0.0",
     "postcss-loader": "^5.2.0",
@@ -44,6 +51,7 @@
   "dependencies": {
     "@babel/preset-react": "^7.13.13",
     "express": "^4.17.1",
+    "mini-css-extract-plugin": "^1.4.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   }

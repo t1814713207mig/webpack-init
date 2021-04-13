@@ -1,6 +1,9 @@
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const htmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
 const glob = require('glob');
 
 const getMpa = () => { 
@@ -10,13 +13,17 @@ const getMpa = () => {
     fileArr.forEach((item) => {
         const match = item.match(/public\/(.*)\.html$/)
         const pagename = match && match[1];
-        // console.log(pagename);
         entry[pagename] = `./src/${pagename}.js`;
         htmlWebpackPlugins.push(
             new htmlWebpackPlugin({
                 template: path.join(__dirname, `./public/${pagename}.html`),
                 filename: `${pagename}.html`,
-                chunks: [pagename]
+                chunks: [pagename],
+                minify: {
+                    removeComments: true,
+                    collapseWhitespace: true,
+                    minifyCSS: true,
+                }
             })
         );
     });
@@ -28,13 +35,18 @@ module.exports = {
     mode: 'development',
     output: {
         path: path.resolve(__dirname, './dist/'),
-        filename:'[name]_[hash:6].js'
+        filename:'js/[name]_[hash:6].js'
     },
     module: {
         rules: [
             {
                 test: /\.less$/,
-                use: ["style-loader","css-loader","postcss-loader","less-loader"]
+                use: [{
+                    loader: MiniCssExtractPlugin.loader,
+                    options: {
+                        publicPath:"../",
+                    }
+                },"css-loader","postcss-loader","less-loader"]
             },
             {
                 test: /\.(eot|ttf|woff|woff2|svg)$/,
@@ -42,7 +54,7 @@ module.exports = {
                     // 虽然使用url-loader代替file-loader，但需要下载file-loader插件
                     loader: "url-loader",
                     options: {
-                        name: "[name]_[hash].[ext]",
+                        name: "[name]_[hash:6].[ext]",
                         outputPath: "iconfont/",
                         limit: 1024
                     }
@@ -61,16 +73,29 @@ module.exports = {
             },
             {
                 test: /\.js$/,
-                use:"babel-loader"
+                include:path.resolve(__dirname,'./src'),
+                use: "babel-loader"
             }
         ]
     },
-    plugins: [new CleanWebpackPlugin(), ...htmlWebpackPlugins],
+    plugins: [new CleanWebpackPlugin(), ...htmlWebpackPlugins, new MiniCssExtractPlugin({
+        filename: "css/[name]_[contenthash:6].css",
+        chunkFilename:"[id].css"
+    }), new ImageMinimizerPlugin({
+        minimizerOptions: {
+            plugins: [
+                ['gifsicle', { interlaced: true }],
+                ['jpegtran', { progressive: true }],
+                ['optipng', { optimizationLevel: 5 }],
+                ['svgo',{plugins:[{removeViewBox:false}]}]
+            ]
+        }
+    })],
     devServer: {
         contentBase: false,
         port: 8081,
         open: true,
-        host: '0.0.0.0',//如需通过本地ip访问需要配置host
+        host: '127.0.0.1',//如需通过本地ip访问需要配置host
         proxy: {
             '/api': {
                 target:'http://172.24.27.0:8082'
@@ -78,4 +103,19 @@ module.exports = {
         },
         hot: true,
     },
+    resolve: {
+        modules: [path.resolve(__dirname, './node_modules')],
+        alias: {
+            '@src': path.join(__dirname, "./src"),
+            "@assets": path.resolve(__dirname, "./static"),
+        },
+        extensions: ['.js', '.jsx', '.json', '.ts'],
+        
+    },
+    optimization: {
+        minimize: true,
+        minimizer: [
+            new CssMinimizerPlugin(),
+        ]
+    }
 };
