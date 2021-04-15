@@ -9,11 +9,13 @@ const glob = require('glob');
 const getMpa = () => { 
     const entry = {};
     const htmlWebpackPlugins = [];
+    const rewrite = [];
     const fileArr = glob.sync(path.join(__dirname, "./public/*.html"));
     fileArr.forEach((item) => {
         const match = item.match(/public\/(.*)\.html$/)
         const pagename = match && match[1];
-        entry[pagename] = `./src/${pagename}.js`;
+        entry[pagename] = `./src/${pagename}.jsx`;
+        rewrite.push({ from: new RegExp(`^\/${pagename}`), to: `/${pagename}.html` });
         htmlWebpackPlugins.push(
             new htmlWebpackPlugin({
                 template: path.join(__dirname, `./public/${pagename}.html`),
@@ -27,15 +29,17 @@ const getMpa = () => {
             })
         );
     });
-    return { entry, htmlWebpackPlugins };
+    rewrite.push({ from: /./, to: '/index.html' });
+    return { entry, htmlWebpackPlugins, rewrite };
 }
-const { entry, htmlWebpackPlugins } = getMpa();
+const { entry, htmlWebpackPlugins, rewrite } = getMpa();
 module.exports = {
     entry,
     mode: 'development',
     output: {
         path: path.resolve(__dirname, './dist/'),
-        filename:'js/[name]_[hash:6].js'
+        filename: 'js/[id].[chunkhash:6].js',
+        chunkFilename:'[id].[chunkhash:6].js',
     },
     module: {
         rules: [
@@ -54,7 +58,7 @@ module.exports = {
                     // 虽然使用url-loader代替file-loader，但需要下载file-loader插件
                     loader: "url-loader",
                     options: {
-                        name: "[name]_[hash:6].[ext]",
+                        name: "[name]_[contenthash:6].[ext]",
                         outputPath: "iconfont/",
                         limit: 1024
                     }
@@ -65,21 +69,21 @@ module.exports = {
                 use: {
                     loader: 'url-loader',
                     options: {
-                        name: "[name]_[hash].[ext]",
+                        name: "[name]_[contenthash:6].[ext]",
                         outputPath: "images/",
                         limit: 1024
                     }
                 }
             },
             {
-                test: /\.js$/,
+                test: /\.jsx$/,
                 include:path.resolve(__dirname,'./src'),
                 use: "babel-loader"
             }
         ]
     },
     plugins: [new CleanWebpackPlugin(), ...htmlWebpackPlugins, new MiniCssExtractPlugin({
-        filename: "css/[name]_[contenthash:6].css",
+        filename: "css/[id]_[contenthash:6].css",
         chunkFilename:"[id].css"
     }), new ImageMinimizerPlugin({
         minimizerOptions: {
@@ -102,6 +106,13 @@ module.exports = {
             }
         },
         hot: true,
+        historyApiFallback: {
+            rewrites: [...rewrite]
+        },
+        writeToDisk:true
+    },
+    resolveLoader: {
+        modules:['node_modules'],
     },
     resolve: {
         modules: [path.resolve(__dirname, './node_modules')],
@@ -109,13 +120,18 @@ module.exports = {
             '@src': path.join(__dirname, "./src"),
             "@assets": path.resolve(__dirname, "./static"),
         },
-        extensions: ['.js', '.jsx', '.json', '.ts'],
+        extensions: ['.jsx', '.js', '.json', '.ts'],
         
     },
     optimization: {
         minimize: true,
         minimizer: [
             new CssMinimizerPlugin(),
-        ]
+        ],
+        // splitChunks: {
+        //     name: 'common',
+        //     chunks: 'initial',
+        //     minChunks: 2 //模块被引用2次以上的才抽离
+        // }
     }
 };

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "n",
-    "dev": "webpack",
+    "dev": "webpack --watch",
     "server": "webpack-dev-server"
   },
   "repository": {

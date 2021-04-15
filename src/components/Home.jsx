@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios';
+import Tab from '@src/common/tab';
+import Head from '@src/common/Head';
 export default class Home extends Component {
     componentDidMount() { 
         axios.get('/api/info').then((res) => { 
@@ -10,6 +12,8 @@ export default class Home extends Component {
         return (
             <div>
                 Home
+                <Tab />
+                <Head />
             </div>
         )
     }
