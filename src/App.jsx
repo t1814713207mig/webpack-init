@@ -1,14 +1,17 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import axios from 'axios';
 import Tab from '@src/common/tab';
 import Head from '@src/common/Head';
 export default class Home extends Component {
-    componentDidMount() { 
-
+    componentDidMount() {
+        axios.get('/api/info').then((res) => {
+            console.log(res);
+        })
     }
     render() {
         return (
             <div>
-                ListHome
+                app
                 <Tab />
                 <Head />
             </div>

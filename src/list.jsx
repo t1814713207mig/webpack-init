@@ -1,4 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ListHome from '@src/components/ListHome';
-ReactDOM.render(<ListHome />, document.getElementById('list'));
+import ListApp from '@src/ListApp';
+import { Provider } from 'react-redux';
+import reduxStore from '@src/redux';
+ReactDOM.render(
+    <Provider store={reduxStore}>
+        <ListApp />
+    </Provider>,
+    document.getElementById('list'));

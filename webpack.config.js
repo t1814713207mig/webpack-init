@@ -38,11 +38,20 @@ module.exports = {
     mode: 'development',
     output: {
         path: path.resolve(__dirname, './dist/'),
-        filename: 'js/[id].[chunkhash:6].js',
-        chunkFilename:'[id].[chunkhash:6].js',
+        filename: 'js/[id].[name].[chunkhash:6].js',
+        chunkFilename:'js/[id].[name].[chunkhash:6].js',
     },
     module: {
         rules: [
+            {
+                test: /\.css$/,
+                use: [{
+                    loader: MiniCssExtractPlugin.loader,
+                    options: {
+                        publicPath:"../",
+                    }
+                },"css-loader","postcss-loader"]
+            },
             {
                 test: /\.less$/,
                 use: [{
@@ -109,7 +118,7 @@ module.exports = {
         historyApiFallback: {
             rewrites: [...rewrite]
         },
-        writeToDisk:true
+        // writeToDisk:true
     },
     resolveLoader: {
         modules:['node_modules'],
@@ -123,15 +132,16 @@ module.exports = {
         extensions: ['.jsx', '.js', '.json', '.ts'],
         
     },
+    // devtool:'source-map',
     optimization: {
         minimize: true,
         minimizer: [
             new CssMinimizerPlugin(),
         ],
-        // splitChunks: {
-        //     name: 'common',
-        //     chunks: 'initial',
-        //     minChunks: 2 //模块被引用2次以上的才抽离
-        // }
+        splitChunks: {
+            name: 'common',
+            chunks: 'initial',
+            minChunks: 2 //模块被引用2次以上的才抽离
+        }
     }
 };

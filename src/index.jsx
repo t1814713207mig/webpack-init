@@ -2,9 +2,9 @@ import style from './style.less';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import pic from '@assets/timg.jpeg';
-import Home from '@src/components/Home';
+import App from '@src/App';
 console.log('this is init -03.');
-ReactDOM.render(<Home />, document.getElementById('app'));
+ReactDOM.render(<App />, document.getElementById('app'));
 let img = new Image();
 img.src = pic;
 
