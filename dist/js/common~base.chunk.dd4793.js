@@ -6,7 +6,7 @@
  * or disable the default devtool with "devtool: false".
  * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
  */
-(self["webpackChunkwebpack_init"] = self["webpackChunkwebpack_init"] || []).push([["common"],{
+(self["webpackChunkwebpack_init"] = self["webpackChunkwebpack_init"] || []).push([["common~base"],{
 
 /***/ "./node_modules/object-assign/index.js":
 /*!*********************************************!*\

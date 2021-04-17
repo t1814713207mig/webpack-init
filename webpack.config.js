@@ -11,7 +11,7 @@ const getMpa = () => {
     const htmlWebpackPlugins = [];
     const rewrite = [];
     const fileArr = glob.sync(path.join(__dirname, "./public/*.html"));
-    fileArr.forEach((item) => {
+    fileArr.forEach((item,index) => {
         const match = item.match(/public\/(.*)\.html$/)
         const pagename = match && match[1];
         entry[pagename] = `./src/${pagename}.jsx`;
@@ -38,8 +38,8 @@ module.exports = {
     mode: 'development',
     output: {
         path: path.resolve(__dirname, './dist/'),
-        filename: 'js/[id].[name].[chunkhash:6].js',
-        chunkFilename:'js/[id].[name].[chunkhash:6].js',
+        filename: 'js/[id].chunk.[chunkhash:6].js',
+        chunkFilename:'js/[id].chunk.[chunkhash:6].js',
     },
     module: {
         rules: [
@@ -139,9 +139,11 @@ module.exports = {
             new CssMinimizerPlugin(),
         ],
         splitChunks: {
-            name: 'common',
-            chunks: 'initial',
-            minChunks: 2 //模块被引用2次以上的才抽离
+            name: 'common~base',
+            chunks: 'all',
+            minChunks: 2, //模块被引用2次以上的才抽离
+            hidePathInfo: true,
+            minSize: 20000,
         }
     }
 };

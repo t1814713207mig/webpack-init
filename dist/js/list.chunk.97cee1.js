@@ -3752,7 +3752,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ([\n    {\n        key: 'list',\n        loader: () => __webpack_require__.e(/*! import() */ \"src_views_listhome_index_jsx\").then(__webpack_require__.bind(__webpack_require__, /*! @src/views/listhome */ \"./src/views/listhome/index.jsx\")),\n        path: '/list',\n    },\n    {\n        key: 'listhome',\n        loader: () => __webpack_require__.e(/*! import() */ \"src_views_listhome_index_jsx\").then(__webpack_require__.bind(__webpack_require__, /*! @src/views/listhome */ \"./src/views/listhome/index.jsx\")),\n        path: '/list/listhome',\n    },\n    {\n        key: 'subnav1',\n        loader: () => __webpack_require__.e(/*! import() */ \"src_views_subnav1_index_jsx\").then(__webpack_require__.bind(__webpack_require__, /*! @src/views/subnav1 */ \"./src/views/subnav1/index.jsx\")),\n        path: '/list/subnav1',\n    }\n]);\n\n//# sourceURL=webpack://webpack-init/./src/views/router.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ([\n    {\n        key: 'list',\n        loader: () => __webpack_require__.e(/*! import() | listhome */ \"listhome\").then(__webpack_require__.bind(__webpack_require__, /*! @src/views/listhome */ \"./src/views/listhome/index.jsx\")),\n        path: '/list',\n    },\n    {\n        key: 'listhome',\n        loader: () => __webpack_require__.e(/*! import() | listhome */ \"listhome\").then(__webpack_require__.bind(__webpack_require__, /*! @src/views/listhome */ \"./src/views/listhome/index.jsx\")),\n        path: '/list/listhome',\n    },\n    {\n        key: 'subnav1',\n        loader: () => __webpack_require__.e(/*! import() | subnav1 */ \"subnav1\").then(__webpack_require__.bind(__webpack_require__, /*! @src/views/subnav1 */ \"./src/views/subnav1/index.jsx\")),\n        path: '/list/subnav1',\n    }\n]);\n\n//# sourceURL=webpack://webpack-init/./src/views/router.js?");
 
 /***/ })
 
@@ -3862,7 +3862,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames based on template
-/******/ 			return "js/" + chunkId + "." + chunkId + "." + {"src_views_listhome_index_jsx":"48c8cf","src_views_subnav1_index_jsx":"be7556"}[chunkId] + ".js";
+/******/ 			return "js/" + chunkId + ".chunk." + {"listhome":"cdf0c7","subnav1":"293763"}[chunkId] + ".js";
 /******/ 		};
 /******/ 	})();
 /******/ 	
@@ -4077,7 +4077,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["common"], () => (__webpack_require__("./src/list.jsx")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["common~base"], () => (__webpack_require__("./src/list.jsx")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()

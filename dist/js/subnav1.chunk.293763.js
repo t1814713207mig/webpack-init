@@ -6,7 +6,7 @@
  * or disable the default devtool with "devtool: false".
  * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
  */
-(self["webpackChunkwebpack_init"] = self["webpackChunkwebpack_init"] || []).push([["src_views_subnav1_index_jsx"],{
+(self["webpackChunkwebpack_init"] = self["webpackChunkwebpack_init"] || []).push([["subnav1"],{
 
 /***/ "./src/views/subnav1/index.jsx":
 /*!*************************************!*\
