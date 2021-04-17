@@ -26,36 +26,6 @@ module.exports = {
                     }
                 },"css-loader","postcss-loader","less-loader"]
             },
-            {
-                test: /\.(eot|ttf|woff|woff2|svg)$/,
-                use: {
-                    // 虽然使用url-loader代替file-loader，但需要下载file-loader插件
-                    loader: "url-loader",
-                    options: {
-                        name: "[name]_[contenthash:6].[ext]",
-                        outputPath: "iconfont/",
-                        limit: 1024
-                    }
-                }
-            },
-            {
-                test: /\.(png|jpe?g||gif|webp)$/,
-                use: [
-                    {
-                        loader: 'url-loader',
-                        options: {
-                            name: "[name]_[contenthash:6].[ext]",
-                            outputPath: "images/",
-                            limit: 1024
-                        }
-                    }
-                ],
-            },
-            {
-                test: /\.jsx$/,
-                include:path.resolve(__dirname,'../src'),
-                use: "babel-loader"
-            }
         ]
     },
     plugins: [...htmlWebpackPlugins, new MiniCssExtractPlugin({
@@ -63,7 +33,7 @@ module.exports = {
         chunkFilename:"[name].[contenthash:6].css"
     })],
     optimization: {
-        minimize: true,
+        minimize: true, // 使用最小化工具 (optimization.minimizer, 默认为uglify-js) 使输出最小
         minimizer: [
             new CssMinimizerPlugin(),
             new UglifyJsPlugin({
@@ -72,11 +42,15 @@ module.exports = {
         ],
         splitChunks: {
             name: 'common~base',
-            chunks: 'all',
-            minChunks: 2, //模块被引用2次以上的才抽离
+            chunks: 'all', 
+            minChunks: 2, // 模块被引用2次以上的才抽离
             hidePathInfo: true,
             minSize: 20000,
-        }
+        },
+        providedExports: true, // 总是启用
+        usedExports: true,// 前提是 providedExports为true
+        sideEffects: true,// 前提是 providedExports usedExports为true
+        concatenateModules:true, // 前提是 providedExports usedExports为true 试图找到可以安全地连接成单个模块的模块图的各个部分
     },
     performance: {
         hints: false,//给定一个创建后超过 250kb 的资源不展示警告或错误提示。
