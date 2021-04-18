@@ -2,6 +2,7 @@ const path = require('path');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+// const TerserPlugin = require('terser-webpack-plugin');
 const getMpa = require('./getMpa.js');
 const { htmlWebpackPlugins } = getMpa();
 module.exports = {
@@ -36,6 +37,7 @@ module.exports = {
         minimize: true, // 使用最小化工具 (optimization.minimizer, 默认为uglify-js) 使输出最小
         minimizer: [
             new CssMinimizerPlugin(),
+            // new TerserPlugin()
             new UglifyJsPlugin({
                 test: /\.js$/i,
             })
@@ -49,7 +51,7 @@ module.exports = {
         },
         providedExports: true, // 总是启用
         usedExports: true,// 前提是 providedExports为true
-        sideEffects: true,// 前提是 providedExports usedExports为true
+        sideEffects: false,// 前提是 providedExports usedExports为true
         concatenateModules:true, // 前提是 providedExports usedExports为true 试图找到可以安全地连接成单个模块的模块图的各个部分
     },
     performance: {
