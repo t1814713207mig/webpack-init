@@ -1,20 +1,35 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import axios from 'axios';
 import Tab from '@src/common/tab';
 import Head from '@src/common/Head';
+
 export default class Home extends Component {
-    componentDidMount() {
-        axios.get('/api/info').then((res) => {
-            console.log(res);
-        })
-    }
-    render() {
-        return (
-            <div>
-                app
-                <Tab />
-                <Head />
-            </div>
-        )
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: '',
+      operation: '',
+    };
+  }
+
+  componentDidMount() {
+    axios.get('/api/info').then((res) => {
+      const { name, operation } = res.data;
+      this.setState({ name, operation });
+    });
+  }
+
+  render() {
+    const { name, operation } = this.state;
+    return (
+      <div>
+        app--
+        {name}
+        &nbsp;&nbsp;
+        {operation}
+        <Tab />
+        <Head />
+      </div>
+    );
+  }
 }

@@ -10,21 +10,23 @@ import router from '@src/views/router';
 import './listapp.less';
 
 function ListApp() {
-    return (
-        <ConfigProvider locale={zhCN}>
-            <BrowserRouter>
-                <Layout>
-                    <Suspense fallback={<Loading />}>
-                        <Switch>
-                            {router.map(({ key, loader, path, ...rest }) => (<Route exact component={lazy(loader)} key={path} path={path} {...rest} />))}
-                            <Route component={NotFound} path="*" />
-                        </Switch>
-                    </Suspense>
-                </Layout>
-            </BrowserRouter>
-        </ConfigProvider>
+  return (
+    <ConfigProvider locale={zhCN}>
+      <BrowserRouter>
+        <Layout>
+          <Suspense fallback={<Loading />}>
+            <Switch>
+              {router.map(({
+                key, loader, path, ...rest
+              }) => (<Route exact component={lazy(loader)} key={path} path={path} {...rest} />))}
+              <Route component={NotFound} path="*" />
+            </Switch>
+          </Suspense>
+        </Layout>
+      </BrowserRouter>
+    </ConfigProvider>
 
-    );
+  );
 }
 
 export default ListApp;

@@ -1,11 +1,11 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react';
 
-export default class Subnav1 extends Component {
-    render() {
-        return (
-            <div>
-                Subnav1
-            </div>
-        )
-    }
+export default class Subnav1 extends PureComponent {
+  render() {
+    return (
+      <div>
+        Subnav1
+      </div>
+    );
+  }
 }
