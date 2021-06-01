@@ -1,0 +1,1 @@
+(self.webpackChunkwebpack_init=self.webpackChunkwebpack_init||[]).push([[363],{1151:(e,n,t)=>{"use strict";t.r(n),t.d(n,{default:()=>s});var r=t(7294);class s extends r.PureComponent{render(){return r.createElement("div",null,"ListHome")}}}}]);

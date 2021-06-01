@@ -3,6 +3,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const SpeedMeasurePlugin = require('speed-measure-webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const getMpa = require('./getMpa');
 
 const smp = new SpeedMeasurePlugin();
@@ -34,7 +35,7 @@ module.exports = smp.wrap({
   plugins: [...htmlWebpackPlugins, new MiniCssExtractPlugin({
     filename: 'css/[name].[contenthash:6].css',
     chunkFilename: '[name].[contenthash:6].css',
-  })],
+  }), new BundleAnalyzerPlugin()],
   optimization: {
     minimize: true, // 使用最小化工具 (optimization.minimizer, 默认为uglify-js) 使输出最小
     minimizer: [
