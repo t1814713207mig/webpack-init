@@ -1,0 +1,1 @@
+(self.webpackChunkwebpack_init=self.webpackChunkwebpack_init||[]).push([[363],{9416:(e,n,t)=>{"use strict";t.r(n),t.d(n,{default:()=>c});var a=t(7294);const s=t.p+"images/imagemin_a42357.jpg";class c extends a.PureComponent{render(){return console.log(s),a.createElement("div",null,"ListHome",a.createElement("img",{alt:"测试",src:s}))}}}}]);
