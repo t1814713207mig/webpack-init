@@ -39,6 +39,12 @@ module.exports = {
         test: /\.jsx$/,
         include: path.resolve(__dirname, '../src'),
         use: [
+          {
+            loader: 'thread-loader',
+            options: {
+              workers: 3,
+            },
+          },
           'babel-loader',
           'eslint-loader',
         ],
