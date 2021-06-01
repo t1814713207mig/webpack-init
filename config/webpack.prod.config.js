@@ -1,10 +1,13 @@
 // const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const SpeedMeasurePlugin = require('speed-measure-webpack-plugin');
 // const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 // const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
+const Purgcssplugin = require('purgecss-webpack-plugin');
+const glob = require('glob');
 const getMpa = require('./getMpa');
 
 const smp = new SpeedMeasurePlugin();
@@ -36,6 +39,8 @@ module.exports = smp.wrap({
   plugins: [...htmlWebpackPlugins, new MiniCssExtractPlugin({
     filename: 'css/[name].[contenthash:6].css',
     chunkFilename: '[name].[contenthash:6].css',
+  }), new Purgcssplugin({
+    paths: glob.sync(`${path.join(__dirname, 'src')}/**/*`, { nodir: true }),
   })], //  new BundleAnalyzerPlugin()
   optimization: {
     minimize: true, // 使用最小化工具 (optimization.minimizer, 默认为uglify-js) 使输出最小
